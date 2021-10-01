@@ -1091,7 +1091,8 @@ function fxnPrintArgs()
     echo " ___________________________________________________"
     echo "|"
     echo "|  Invoked with the following arguments:"
-    echo "|  Verbosity level          $VERBOSITY_LEVEL"
+    echo "|  Docker application:      $DOCKER_APP"
+    echo "|  Verbosity level:         $VERBOSITY_LEVEL"
     echo "|  Home directory:          $USE_HOMEDIR"
     echo "|  Default home directory:  $DUE_ENV_DEFAULT_HOMEDIR"
     echo "|  Max containers per user: $DUE_USER_CONTAINER_LIMIT"
@@ -1120,6 +1121,12 @@ if [ "$1" = "" ];then
     exit
 fi
 
+#
+# Are probably using docker, but it might be podman instead...
+DOCKER_APP="docker"
+if [ -e "/usr/bin/podman" ];then
+	DOCKER_APP="podman"
+fi
 
 while [[ $# -gt 0 ]]
 do
